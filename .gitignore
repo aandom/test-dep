@@ -1,0 +1,28 @@
+# Session files (user data)
+api/sessions/
+api/sessions/*.json
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vs/
+
+# Logs
+*.log
+error_log
+
+# Temporary files
+*.tmp
+*.temp

@@ -1,0 +1,620 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Theme Variables */
+body.light {
+  --bg-color: #ececf1;
+  --text-color: #343541;
+  --panel-bg: #ffffff;
+  --panel-header-bg: #ffffff;
+  --panel-border: #d1d5db;
+  --input-bg: #f3f4f6;
+  --placeholder-color: #6b7280;
+  --scrollbar-thumb: #bdc1c6;
+  --scrollbar-thumb-hover: #9aa0a6;
+  --user-avatar-bg: #7a5af8;
+  --ai-avatar-bg: #00b386;
+  --code-bg: #f3f4f6;
+  --code-text-color: #1f2937;
+  --link-color: #007a63;
+  --link-hover-color: #005a4b;
+  --blockquote-border: #e5e7eb;
+  --blockquote-text-color: #4b5563;
+  --button-hover-bg: #e5e7eb; /* General button hover */
+  --icon-color: #374151;
+  --message-bg: var(--panel-bg);
+  --message-alt-bg: #f9fafb;
+  --send-button-bg: var(--ai-avatar-bg);
+  --send-button-hover-bg: var(--user-avatar-bg);
+  --send-button-icon-color: #ffffff;
+  --suggestion-button-bg: #e9e9eb;
+  --suggestion-button-text: var(--text-color); /* Icon color for suggestion button */
+  --suggestion-button-border: var(--panel-border);
+  --suggestion-button-hover-bg: #dcdcdf;
+  --suggestion-button-active-bg: var(--link-color); /* Active state for suggestion button */
+  --suggestion-button-active-text: #ffffff; /* Active state icon color */
+  --skip-button-bg: #f9fafb; /* Light skip button */
+  --skip-button-text: #4b5563;
+  --skip-button-border: #d1d5db;
+  --skip-button-hover-bg: #f3f4f6;
+  --intermediate-prompt-bg: #f0fdf4; /* Light green for light theme */
+  --intermediate-prompt-border: #bbf7d0; /* Not directly used for border but for consistency */
+  --intermediate-prompt-text: #166534; /* Darker green text for readability */
+  --step-info-color: var(--ai-avatar-bg); /* Color for step info text */
+}
+
+body.dark {
+  --bg-color: #343541;
+  --text-color: #ececf1;
+  --panel-bg: #343541;
+  --panel-header-bg: #202123;
+  --panel-border: #4b5563;
+  --input-bg: #40414f;
+  --placeholder-color: #8e8ea0;
+  --scrollbar-thumb: #565869;
+  --scrollbar-thumb-hover: #676878;
+  --user-avatar-bg: #5436da;
+  --ai-avatar-bg: #10a37f;
+  --code-bg: #2d2d33;
+  --code-text-color: #d1d5db;
+  --link-color: #2dd4bf;
+  --link-hover-color: #5eead4;
+  --blockquote-border: #4b5563;
+  --blockquote-text-color: #9ca3af;
+  --button-hover-bg: #40414f; /* General button hover */
+  --icon-color: #d1d5db;
+  --message-bg: var(--panel-bg);
+  --message-alt-bg: #2e2f3a;
+  --send-button-bg: var(--ai-avatar-bg);
+  --send-button-hover-bg: var(--user-avatar-bg);
+  --send-button-icon-color: #ffffff;
+  --suggestion-button-bg: #40414f;
+  --suggestion-button-text: var(--text-color); /* Icon color for suggestion button */
+  --suggestion-button-border: #565869;
+  --suggestion-button-hover-bg: #4f505e;
+  --suggestion-button-active-bg: var(--link-color); /* Active state for suggestion button */
+  --suggestion-button-active-text: var(--bg-color); /* Active state icon color */
+  --skip-button-bg: #374151; /* Dark skip button */
+  --skip-button-text: #d1d5db;
+  --skip-button-border: #4b5563;
+  --skip-button-hover-bg: #4b5563;
+  --intermediate-prompt-bg: #111827; /* Darker, slightly blue-green for dark theme */
+  --intermediate-prompt-border: #1f2937; /* Not directly used for border but for consistency */
+  --intermediate-prompt-text: #6ee7b7;  /* Lighter mint green text */
+  --step-info-color: var(--ai-avatar-bg); /* Color for step info text */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Panel Styles */
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--panel-border);
+    background-color: var(--panel-bg);
+    position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.panel:last-child {
+    border-right: none;
+}
+
+.panel-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--panel-border);
+    background-color: var(--panel-header-bg);
+    display: flex;
+    align-items: center;
+    height: 60px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.panel-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-right: auto;
+    transition: color 0.3s ease;
+}
+
+#themetoggle {
+    background: none;
+    border: none;
+    color: var(--icon-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    margin-left: 12px;
+}
+#themetoggle:hover {
+    background-color: var(--button-hover-bg);
+}
+#themetoggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--link-color);
+}
+
+.model-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    margin-right: 16px;
+    transition: color 0.3s ease;
+}
+
+.chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+.chat-container > .message:nth-child(even):not(.intermediate-prompt-display) { /* Exclude intermediate from alternating */
+    background-color: var(--message-alt-bg);
+}
+.chat-container > .message:nth-child(odd):not(.intermediate-prompt-display) {
+    background-color: var(--message-bg);
+}
+
+.message {
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+.message:first-child {
+    padding-top: 24px;
+}
+.message:last-child {
+    padding-bottom: 24px;
+}
+
+.message-content {
+    max-width: 768px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+.user-avatar { background-color: var(--user-avatar-bg); }
+.ai-avatar { background-color: var(--ai-avatar-bg); }
+.avatar i { font-size: 1rem; }
+/* Ensure specific icons in avatars are visible */
+.avatar i.fa-cogs, .avatar i.fa-magic {
+    color: #ffffff;
+}
+
+
+.content {
+    flex: 1;
+    line-height: 1.6;
+    padding-top: 2px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+.content > *:first-child { margin-top: 0; }
+.content > *:last-child { margin-bottom: 0; }
+.content em { font-style: italic; } /* For initial greeting example */
+
+/* START OF MODIFIED/ADDED CSS */
+.step-info {
+    font-weight: 600; /* Bolder */
+    color: var(--step-info-color); /* Use theme variable */
+    margin-right: 4px; /* Space after the step info */
+}
+/* END OF MODIFIED/ADDED CSS */
+
+.input-container {
+    padding: 12px 16px;
+    background-color: var(--panel-header-bg);
+    border-top: 1px solid var(--panel-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.input-box {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    max-width: 768px;
+    margin: 0 auto;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    background-color: var(--input-bg);
+    padding: 4px;
+    gap: 4px; /* Space between textarea, skip button, and send button */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
+}
+.input-box:focus-within {
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 2px var(--link-color);
+}
+
+textarea {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 10px 12px;
+    resize: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    min-height: 24px;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 8px;
+    transition: color 0.3s ease;
+}
+textarea#enhanced-input, textarea#direct-input {
+    height: 52px; /* Default before JS */
+}
+textarea:focus { outline: none; }
+textarea::placeholder {
+    color: var(--placeholder-color);
+    transition: color 0.3s ease;
+}
+
+/* Skip Question Button - Now appears next to suggestion button */
+.skip-question-btn {
+    background-color: var(--skip-button-bg);
+    color: var(--skip-button-text);
+    border: 1px solid var(--skip-button-border);
+    cursor: pointer;
+    width: 32px; /* Icon button width to match suggestion button */
+    height: 32px; /* Icon button height to match suggestion button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 0; /* No padding for icon button */
+    font-size: 0.9rem; /* Icon size to match suggestion button */
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    flex-shrink: 0;
+}
+.skip-question-btn:hover:not(:disabled) {
+    background-color: var(--skip-button-hover-bg);
+    border-color: var(--link-color);
+}
+.skip-question-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--placeholder-color);
+    border-color: var(--placeholder-color);
+}
+
+
+button#direct-send,
+button#enhanced-send {
+    background-color: var(--send-button-bg);
+    color: var(--send-button-icon-color);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    /* margin-left: 4px; Removed, using gap in .input-box */
+    margin-bottom: 2px;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+}
+button#direct-send:hover,
+button#enhanced-send:hover {
+    background-color: var(--send-button-hover-bg);
+}
+button#direct-send:disabled,
+button#enhanced-send:disabled {
+    background-color: var(--placeholder-color);
+    cursor: not-allowed;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+    border: 2px solid var(--message-bg);
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-thumb-hover); }
+
+pre {
+    background-color: var(--code-bg);
+    color: var(--code-text-color);
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1em 0;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 0.875em;
+    line-height: 1.6;
+    border: 1px solid var(--panel-border);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    font-family: inherit;
+    border: none;
+}
+code {
+    background-color: var(--code-bg);
+    color: var(--code-text-color);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    border: 1px solid var(--panel-border);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    margin-top: 1.2em; margin-bottom: 0.6em; font-weight: 600; line-height: 1.3; color: var(--text-color); transition: color 0.3s ease;
+}
+.content h1 { font-size: 1.8em; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.3em; }
+.content h2 { font-size: 1.5em; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.3em; }
+.content h3 { font-size: 1.3em; }
+.content h4 { font-size: 1.1em; }
+.content p { margin-bottom: 1em; }
+.content ul, .content ol { margin-bottom: 1em; padding-left: 1.5em; }
+.content li { margin-bottom: 0.4em; }
+.content li > p { margin-bottom: 0.4em; }
+.content a { color: var(--link-color); text-decoration: none; transition: color 0.2s ease, text-decoration 0.2s ease; }
+.content a:hover { color: var(--link-hover-color); text-decoration: underline; }
+.content blockquote {
+    border-left: 3px solid var(--blockquote-border); padding: 0.5em 1em; margin: 1em 0; color: var(--blockquote-text-color); background-color: var(--message-alt-bg); border-radius: 0 4px 4px 0; transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+.content blockquote p { margin-bottom: 0.5em; }
+.content blockquote > *:first-child { margin-top: 0; }
+.content blockquote > *:last-child { margin-bottom: 0; }
+
+.typing-indicator { display: flex; align-items: center; gap: 5px; padding: 8px 0; }
+.typing-dot {
+    width: 7px; height: 7px; border-radius: 50%; background-color: var(--placeholder-color);
+    animation: typing-dot 1.4s infinite ease-in-out both; transition: background-color 0.3s ease;
+}
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing-dot {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.7; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* Suggestion System Styles */
+.suggestion-placeholder,
+.suggestion-fallback {
+    font-style: italic;
+    color: var(--placeholder-color);
+    font-size: 0.85em;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 8px;
+}
+.suggestion-interactive {
+    margin-top: 10px;
+    display: flex; /* To align button and suggestion content if needed, or just for button */
+    flex-direction: column; /* Stack button above suggestion content */
+    align-items: flex-start; /* Align button to the left */
+}
+
+/* Container for suggestion and skip buttons */
+.suggestion-buttons-container {
+    display: flex;
+    gap: 8px; /* Space between the two buttons */
+    margin-bottom: 8px; /* Space before the suggestion content */
+    align-items: center;
+}
+
+/* START OF MODIFIED CSS for .show-suggestion-btn */
+.show-suggestion-btn {
+    background-color: var(--suggestion-button-bg);
+    color: var(--suggestion-button-text); /* This will be the icon color */
+    border: 1px solid var(--suggestion-button-border);
+    width: 32px; /* Icon button width */
+    height: 32px; /* Icon button height */
+    border-radius: 8px; /* Rounded corners, or 50% for circle */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* No padding for icon button */
+    font-size: 0.9rem; /* Icon size */
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+}
+.show-suggestion-btn:hover {
+    background-color: var(--suggestion-button-hover-bg);
+    border-color: var(--link-color); /* Highlight on hover */
+}
+.show-suggestion-btn.active { /* Style for when suggestion is visible */
+    background-color: var(--suggestion-button-active-bg);
+    color: var(--suggestion-button-active-text);
+    border-color: var(--suggestion-button-active-bg); /* Match background or use link color */
+}
+/* END OF MODIFIED CSS for .show-suggestion-btn */
+
+.suggestion-content {
+    /* display: none; is set inline by JS initially */
+    width: 100%; /* Make suggestion island take full width available in its container */
+}
+.suggestion-island {
+    background-color: var(--code-bg);
+    color: var(--code-text-color);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--panel-border);
+    font-size: 0.9em;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.suggestion-island strong {
+    color: inherit;
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+/* Intermediate Prompt Display Styling */
+.message.intermediate-prompt-display {
+    background-color: var(--intermediate-prompt-bg);
+    border-left: 4px solid var(--ai-avatar-bg); /* Accent with AI color */
+    border-top: 1px solid var(--panel-border);
+    border-bottom: 1px solid var(--panel-border);
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.message.intermediate-prompt-display .content {
+    color: var(--intermediate-prompt-text);
+}
+.message.intermediate-prompt-display .content p strong { /* For the "Current Enhanced Prompt (so far):" heading */
+    color: var(--intermediate-prompt-text); /* Ensure heading is also themed */
+    font-weight: 600; /* Explicitly set weight */
+}
+.message.intermediate-prompt-display pre {
+    background-color: var(--panel-bg); /* Use panel bg for the <pre> block for contrast */
+    color: var(--text-color);           /* And regular text color for the prompt inside */
+    border: 1px solid var(--panel-border);
+    margin-top: 8px; /* Space between "Current Enhanced Prompt..." and the pre block */
+}
+
+
+/* Copy Prompt Button (for final prompt) */
+.copy-prompt-button {
+    background-color: var(--ai-avatar-bg);
+    color: var(--send-button-icon-color);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 12px;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.copy-prompt-button:hover {
+    background-color: var(--user-avatar-bg);
+    opacity: 0.9;
+}
+.copy-prompt-button:disabled {
+    background-color: var(--placeholder-color);
+    color: var(--bg-color);
+    cursor: default;
+    opacity: 0.7;
+}
+.content pre { /* General styling for pre, applies to intermediate and final prompt pre blocks */
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .message-content, .input-box { max-width: 90%; }
+}
+@media (max-width: 768px) {
+    body { overflow: auto; }
+    .container { flex-direction: column; height: auto; min-height: 100vh; }
+    .panel { min-height: 70vh; border-right: none; border-bottom: 1px solid var(--panel-border); }
+    .panel:last-child { border-bottom: none; }
+    .panel-header { height: 56px; }
+    .panel-title { font-size: 0.95rem; }
+    #themetoggle { width: 36px; height: 36px; font-size: 1.1rem; }
+    .message { padding: 16px 12px; }
+    .avatar { width: 28px; height: 28px; }
+    .avatar i { font-size: 0.9rem; }
+    .input-container { padding: 8px 12px; }
+    .input-box {
+        padding: 4px;
+        gap: 2px;
+    }
+    textarea { font-size: 0.9rem; padding: 8px 10px; }
+    textarea#enhanced-input, textarea#direct-input { height: 48px; }
+
+    button#direct-send, button#enhanced-send {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+        margin-bottom: 1px; /* Fine-tune alignment */
+    }
+
+    .content { font-size: 0.95rem; }
+    /* START OF MODIFIED CSS for .show-suggestion-btn (responsive) */
+    .show-suggestion-btn {
+        width: 30px; /* Slightly smaller on mobile */
+        height: 30px;
+        font-size: 0.8rem; /* Smaller icon */
+    }
+    /* END OF MODIFIED CSS for .show-suggestion-btn (responsive) */
+    /* Skip button responsive styles */
+    .skip-question-btn {
+        width: 30px; /* Match suggestion button on mobile */
+        height: 30px;
+        font-size: 0.8rem; /* Smaller icon */
+    }
+    .skip-question-btn:disabled {
+        opacity: 0.5;
+    }
+    .suggestion-island { font-size: 0.85em; padding: 8px 12px; }
+    .message.intermediate-prompt-display {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .message.intermediate-prompt-display pre {
+        font-size: 0.8em; /* Slightly smaller prompt text on mobile if needed */
+    }
+}

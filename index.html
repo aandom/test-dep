@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="panel" id="enhanced-panel">
+            <div class="panel-header">
+                <div class="model-selector">
+                    <!-- Model selector content if any -->
+                </div>
+                <div class="panel-title">Enhanced Prompt</div>
+                <button id="themetoggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i> <!-- Default to moon (light theme active) -->
+                </button>
+            </div>
+            <div class="chat-container" id="enhanced-chat"></div>
+            <div class="input-container">
+                <div class="input-box">
+                    <textarea id="enhanced-input" placeholder="Send a message..."></textarea>
+                    <button id="enhanced-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="panel" id="direct-panel">
+            <div class="panel-header">
+                <div class="model-selector">
+                    <span>GPT-4</span>
+                </div>
+                <div class="panel-title">Direct Interaction</div>
+                <!-- Theme toggle could also be here if desired -->
+            </div>
+            <div class="chat-container" id="direct-chat"></div>
+            <div class="input-container">
+                <div class="input-box">
+                    <textarea id="direct-input" placeholder="Send a message..."></textarea>
+                    <button id="direct-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
