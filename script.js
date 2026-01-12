@@ -1242,6 +1242,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </button>
                                     <button class="skip-question-btn" title="Skip this question" data-question-index="${currentIndex}">
                                         <i class="fas fa-forward"></i>
+                                        <span class="skip-text">Skip</span>
                                     </button>
                                 </div>`;
             placeholderDiv.innerHTML = buttonsHtml + suggestionContentHtml;
