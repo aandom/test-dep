@@ -8,6 +8,12 @@ This tool features two interaction modes:
 - **Direct Panel**: Standard chat with GPT-4
 - **Enhanced Panel**: Guided questionnaire to build refined prompts through 7 strategic questions (topic, AI role, context, audience level, tone, examples, diversity)
 
+### Interface
+
+![Tool Interface](./screenshots/interface.png)
+
+Dual-panel layout with Enhanced Prompt (left) and Direct Interaction (right). Theme toggle available in header.
+
 ## Architecture Flow
 
 ```
@@ -180,11 +186,29 @@ Open browser to: `http://localhost:8000`
 
 ### 4. Usage
 
-**Direct Panel (Left):**
+**Direct Panel (Right):**
 - Type message → Press Enter → Get response
 
-**Enhanced Panel (Right):**
+**Enhanced Panel (Left):**
 - Enter initial idea → Answer 7 questions → Copy enhanced prompt → Use in Direct Panel
+
+#### How It Works
+
+**Step 1:** Answer refinement questions or skip optional ones
+
+![Skip Question](./screenshots/skip-question.png)
+
+**Step 2:** Click lightbulb icon for AI-powered suggestions
+
+![Suggestion](./screenshots/suggestion.png)
+
+**Step 3:** Review the generated enhanced prompt
+
+![Final Prompt](./screenshots/final-prompt.png)
+
+**Step 4:** Copy and paste into Direct Interaction panel for better results
+
+![Copy to GPT-4](./screenshots/cpy-final-promp-and-past-in-gpt4-tointeractwith-gpt.png)
 
 ## Troubleshooting
 
